@@ -1,3 +1,8 @@
+DROP TABLE IF EXISTS comments;
+DROP TABLE IF EXISTS posts;
+DROP TABLE IF EXISTS topics;
+DROP TABLE IF EXISTS users;
+
 CREATE EXTENSION IF NOT EXISTS "pgcrypto";
 
 CREATE TABLE users (
@@ -32,7 +37,7 @@ CREATE TABLE posts (
     CONSTRAINT fk_posts_topics
         FOREIGN KEY (topic_id)
         REFERENCES topics(topic_id)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
 
     CONSTRAINT fk_posts_users
         FOREIGN KEY (created_by)
@@ -51,10 +56,11 @@ CREATE TABLE comments (
     CONSTRAINT fk_comments_posts
         FOREIGN KEY (post_id)
         REFERENCES posts(post_id)
-        ON DELETE CASCADE
+        ON DELETE CASCADE,
 
     CONSTRAINT fk_comments_users
         FOREIGN KEY (created_by)
         REFERENCES users(user_id)
         ON DELETE CASCADE
 );
+
