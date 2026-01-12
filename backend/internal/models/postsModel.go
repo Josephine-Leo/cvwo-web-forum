@@ -2,7 +2,8 @@ package models
 
 import "time"
 
-type Posts struct {
+//chnged frm posts to post (db schema nt chnged)
+type Post struct {
 	PostID    string    `json:"post_id" db:"post_id"`
 	Title     string    `json:"title" db:"title"`
 	BodyText  string    `json:"body_text" db:"body_text"`
