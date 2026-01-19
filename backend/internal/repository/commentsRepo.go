@@ -100,7 +100,7 @@ func UpdateComment(dbpool *pgxpool.Pool, commentID string, bodyText string, crea
 	return &comment, nil
 }
 
-// Get comments by UserID -> See what comments u hv
+// Get ALL comments by UserID -> See what comments u hv
 func GetCommentByID(dbpool *pgxpool.Pool, createdBy string) (*models.Comment, error) {
 	var ctx context.Context
 	var cancel context.CancelFunc
@@ -131,7 +131,7 @@ func GetCommentByID(dbpool *pgxpool.Pool, createdBy string) (*models.Comment, er
 	return &comment, nil
 }
 
-// Get comments by PostID -> See what comments a post hv
+// Get ALL comments by PostID -> See what comments a post hv
 func GetCommentByPost(dbpool *pgxpool.Pool, postID string) (*models.Comment, error) {
 	var ctx context.Context
 	var cancel context.CancelFunc
@@ -161,3 +161,5 @@ func GetCommentByPost(dbpool *pgxpool.Pool, postID string) (*models.Comment, err
 
 	return &comment, nil
 }
+
+// idk if nd to get a single comment? idk the use
