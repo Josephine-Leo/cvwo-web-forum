@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Need to add email into database fr chnge password
 type User struct {
 	UserID       string    `json:"user_id" db:"user_id"`
 	Username     string    `json:"username" db:"username"`

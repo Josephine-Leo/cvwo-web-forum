@@ -67,7 +67,7 @@ func DeleteUser(dbpool *pgxpool.Pool, UserID string) error {
 	return nil
 }
 
-// Upd username
+// Upd username -> Need change this to incl Password
 func UpdateUsername(dbpool *pgxpool.Pool, userID string, username string) (*models.User, error) {
 	var ctx context.Context
 	var cancel context.CancelFunc
@@ -97,7 +97,7 @@ func UpdateUsername(dbpool *pgxpool.Pool, userID string, username string) (*mode
 	return &user, nil
 }
 
-// Upd password hash -> whn user chnge password
+// Upd password hash -> whn user chnge password (CHANGE TO ACCEPT EMAIL TO AUTHENTICATE USERID)
 func UpdatePassword(dbpool *pgxpool.Pool, userID string, passwordHash string) (*models.User, error) {
 	var ctx context.Context
 	var cancel context.CancelFunc

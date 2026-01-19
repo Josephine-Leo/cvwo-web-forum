@@ -102,8 +102,8 @@ func UpdatePost(dbpool *pgxpool.Pool, postID string, bodyText string, createdBy 
 	return &post, nil
 }
 
-// Get post by UserID -> See what you posted
-func GetPostByID(dbpool *pgxpool.Pool, postID string) (*models.Post, error) {
+// Get ALL post by UserID -> See what you posted
+func GetPostByID(dbpool *pgxpool.Pool, createdBy string) (*models.Post, error) {
 	var ctx context.Context
 	var cancel context.CancelFunc
 	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
@@ -112,12 +112,12 @@ func GetPostByID(dbpool *pgxpool.Pool, postID string) (*models.Post, error) {
 	var query string = `
 		SELECT post_id, title, body_text, created_at, updated_at, topic_id, created_by
 		FROM posts
-		WHERE post_id = $1
+		WHERE created_by = $1
 	`
 
 	var post models.Post
 
-	var err error = dbpool.QueryRow(ctx, query, postID).Scan(
+	var err error = dbpool.QueryRow(ctx, query, createdBy).Scan(
 		&post.PostID,
 		&post.Title,
 		&post.BodyText,
@@ -134,7 +134,7 @@ func GetPostByID(dbpool *pgxpool.Pool, postID string) (*models.Post, error) {
 	return &post, nil
 }
 
-// Get post by Topic -> See what posts in a topic
+// Get ALL post by Topic -> See what posts in a topic
 func GetPostByTopic(dbpool *pgxpool.Pool, topicID string) (*models.Post, error) {
 	var ctx context.Context
 	var cancel context.CancelFunc
@@ -156,6 +156,38 @@ func GetPostByTopic(dbpool *pgxpool.Pool, topicID string) (*models.Post, error) 
 		&post.BodyText,
 		&post.CreatedAt,
 		&post.UpdatedAt,
+		&post.CreatedBy,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+
+	return &post, nil
+}
+
+// Get single post
+func GetPostByPostID(dbpool *pgxpool.Pool, postID string) (*models.Post, error) {
+	var ctx context.Context
+	var cancel context.CancelFunc
+	ctx, cancel = context.WithTimeout(context.Background(), 5*time.Second)
+	defer cancel()
+
+	var query string = `
+		SELECT post_id, title, body_text, created_at, updated_at, topic_id, created_by
+		FROM posts
+		WHERE post_id = $1
+	`
+
+	var post models.Post
+
+	var err error = dbpool.QueryRow(ctx, query, post).Scan(
+		&post.PostID,
+		&post.Title,
+		&post.BodyText,
+		&post.CreatedAt,
+		&post.UpdatedAt,
+		&post.TopicID,
 		&post.CreatedBy,
 	)
 
