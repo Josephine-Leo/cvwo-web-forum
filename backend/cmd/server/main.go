@@ -41,4 +41,12 @@ func main() {
 		log.Fatalf("failed to run server: %v", err)
 	}
 
+	//ENDPOINTS -> MOVE TO ROUTER
+	// Authentication endpoints
+
+	//http.HandleFunc("/signup", signup)
+	//http.HandleFunc("/login", login)
+	//http.HandleFunc("/logout", logout)
+	//http.HandleFunc("/protected", protected)
+
 }
